@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1521488915 source:c:\users\kiril\work\coding\bsu\binary\main.cpp
+	<bits/stdc++.h>
+	<windows.h>
+	"flights.h"
+
+1521482395 c:\users\kiril\work\coding\bsu\binary\flights.h
+
+1521487072 source:c:\users\kiril\work\coding\bsu\binary\readdata.cpp
+	<bits/stdc++.h>
+	"flights.h"
+
+1521486174 source:c:\users\kiril\work\coding\bsu\binary\writedata.cpp
+	<bits/stdc++.h>
+	"flights.h"
+
