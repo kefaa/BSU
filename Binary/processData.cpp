@@ -16,12 +16,12 @@ void findSeats(char dest[200], Time t) {
             int id = flights[i].id;
             if (seats > 0) {
                 any = true;
-                printf("%d мест свободно на рейс #%d\n", seats, id);
+                printf("%d РјРµСЃС‚ СЃРІРѕР±РѕРґРЅРѕ РЅР° СЂРµР№СЃ #%d\n", seats, id);
             }
         }
     }
     if (!any) {
-        printf("Нет рейсов до %s в %s со свободными местами\n", dest, t.toString().c_str());
+        printf("РќРµС‚ СЂРµР№СЃРѕРІ РґРѕ %s РІ %s СЃРѕ СЃРІРѕР±РѕРґРЅС‹РјРё РјРµСЃС‚Р°РјРё\n", dest, t.toString().c_str());
     }
 }
 
@@ -32,7 +32,7 @@ void findLongestFlight() {
             best = item;
         }
     }
-    printf("Рейс #%d до %s имеет самую большую длительность (%d минут)\n", best.id, best.dest, best.duration());
+    printf("Р РµР№СЃ #%d РґРѕ %s РёРјРµРµС‚ СЃР°РјСѓСЋ Р±РѕР»СЊС€СѓСЋ РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ (%d РјРёРЅСѓС‚)\n", best.id, best.dest, best.duration());
 }
 
 void modifyFlight(int id, Time dep, Time arr) {
@@ -40,16 +40,16 @@ void modifyFlight(int id, Time dep, Time arr) {
         if (item.id == id) {
             item.arr = arr;
             item.dep = dep;
-            printf("Время отправления рейса #%d было изменено на %s, время прибытия - на %s\n", id, dep.toString().c_str(), arr.toString().c_str());
+            printf("Р’СЂРµРјСЏ РѕС‚РїСЂР°РІР»РµРЅРёСЏ СЂРµР№СЃР° #%d Р±С‹Р»Рѕ РёР·РјРµРЅРµРЅРѕ РЅР° %s, РІСЂРµРјСЏ РїСЂРёР±С‹С‚РёСЏ - РЅР° %s\n", id, dep.toString().c_str(), arr.toString().c_str());
             return;
         }
     }
-    printf("Ошибка! Рейс #%d отсутствует\n", id);
+    printf("РћС€РёР±РєР°! Р РµР№СЃ #%d РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚\n", id);
 }
 
 void printData() {
     int sz = (int)flights.size();
-    printf("Всего %d %s:\n", sz, (sz == 1 ? "рейс" : "рейсов"));
+    printf("Р’СЃРµРіРѕ %d %s:\n", sz, (sz == 1 ? "СЂРµР№СЃ" : "СЂРµР№СЃРѕРІ"));
     for(int i = 0; i < flights.size(); ++i) {
         Item item = flights[i];
         cout << item << endl;
@@ -62,7 +62,7 @@ void removeFlights(char dest[200]) {
     flights.resize( remove_if(flights.begin(), flights.end(), [&](const Item &rhs) {
         return strcmp(dest, rhs.dest) == 0;
     }) - flights.begin());
-    printf("Рейсы до %s были удалены\n", dest);
+    printf("Р РµР№СЃС‹ РґРѕ %s Р±С‹Р»Рё СѓРґР°Р»РµРЅС‹\n", dest);
 }
 
 void swapFlights(char dest[200]) {
@@ -74,38 +74,38 @@ void swapFlights(char dest[200]) {
         }
     }
     if (idx2 == -1) {
-        printf("Ошибка! Меньше двух рейсов до %s!\n", dest);
+        printf("РћС€РёР±РєР°! РњРµРЅСЊС€Рµ РґРІСѓС… СЂРµР№СЃРѕРІ РґРѕ %s!\n", dest);
         return;
     }
     swap(flights[idx1], flights[idx2]);
-    printf("Рейсы #%d и #%d были изменены местами\n", flights[idx1].id, flights[idx2].id);
+    printf("Р РµР№СЃС‹ #%d Рё #%d Р±С‹Р»Рё РёР·РјРµРЅРµРЅС‹ РјРµСЃС‚Р°РјРё\n", flights[idx1].id, flights[idx2].id);
 }
 
 void sortData() {
     sort(flights.begin(), flights.end());
-    printf("Рейсы упорядочены по направлению");
+    printf("Р РµР№СЃС‹ СѓРїРѕСЂСЏРґРѕС‡РµРЅС‹ РїРѕ РЅР°РїСЂР°РІР»РµРЅРёСЋ");
 }
 
 void testQueries() {
-    findSeats("Варшава", Time(14, 05));
+    findSeats("Р’Р°СЂС€Р°РІР°", Time(14, 05));
     findLongestFlight();
     modifyFlight(240, Time(13, 15), Time(17, 20));
-    removeFlights("Варшава");
-    removeFlights("Берлин");
-    swapFlights("Москва");
+    removeFlights("Р’Р°СЂС€Р°РІР°");
+    removeFlights("Р‘РµСЂР»РёРЅ");
+    swapFlights("РњРѕСЃРєРІР°");
 //    printData();
     sortData();
 }
 
 void processQueries() {
-    printf("Введите номер операции, которую хотите выполнить:\n");
-    printf("0: Завершить работу программы.\n");
-    printf("1: Проверить наличие рейсов с заданным направлением и временем отправления.\n");
-    printf("2: Найти номер и пункт назначения рейса с наибольшим временем полета.\n");
-    printf("3: Обновить для указанного рейса время вылета и время прибытия.\n");
-    printf("4: Удалить из списка рейсы по заданному направлению.\n");
-    printf("5: Поменять местами в списке рейсы по заданному направлению.\n");
-    printf("6: Упорядочить список по пункту назначения.\n");
+    printf("Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ РѕРїРµСЂР°С†РёРё, РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ РІС‹РїРѕР»РЅРёС‚СЊ:\n");
+    printf("0: Р—Р°РІРµСЂС€РёС‚СЊ СЂР°Р±РѕС‚Сѓ РїСЂРѕРіСЂР°РјРјС‹.\n");
+    printf("1: РџСЂРѕРІРµСЂРёС‚СЊ РЅР°Р»РёС‡РёРµ СЂРµР№СЃРѕРІ СЃ Р·Р°РґР°РЅРЅС‹Рј РЅР°РїСЂР°РІР»РµРЅРёРµРј Рё РІСЂРµРјРµРЅРµРј РѕС‚РїСЂР°РІР»РµРЅРёСЏ.\n");
+    printf("2: РќР°Р№С‚Рё РЅРѕРјРµСЂ Рё РїСѓРЅРєС‚ РЅР°Р·РЅР°С‡РµРЅРёСЏ СЂРµР№СЃР° СЃ РЅР°РёР±РѕР»СЊС€РёРј РІСЂРµРјРµРЅРµРј РїРѕР»РµС‚Р°.\n");
+    printf("3: РћР±РЅРѕРІРёС‚СЊ РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ СЂРµР№СЃР° РІСЂРµРјСЏ РІС‹Р»РµС‚Р° Рё РІСЂРµРјСЏ РїСЂРёР±С‹С‚РёСЏ.\n");
+    printf("4: РЈРґР°Р»РёС‚СЊ РёР· СЃРїРёСЃРєР° СЂРµР№СЃС‹ РїРѕ Р·Р°РґР°РЅРЅРѕРјСѓ РЅР°РїСЂР°РІР»РµРЅРёСЋ.\n");
+    printf("5: РџРѕРјРµРЅСЏС‚СЊ РјРµСЃС‚Р°РјРё РІ СЃРїРёСЃРєРµ СЂРµР№СЃС‹ РїРѕ Р·Р°РґР°РЅРЅРѕРјСѓ РЅР°РїСЂР°РІР»РµРЅРёСЋ.\n");
+    printf("6: РЈРїРѕСЂСЏРґРѕС‡РёС‚СЊ СЃРїРёСЃРѕРє РїРѕ РїСѓРЅРєС‚Сѓ РЅР°Р·РЅР°С‡РµРЅРёСЏ.\n");
     int type;
     cin >> type;
     if (type == 0) {
@@ -113,7 +113,7 @@ void processQueries() {
     }
     if (type == 1) {
         char dest[200]; Time t;
-        printf("Введите направление и время отправления: ");
+        printf("Р’РІРµРґРёС‚Рµ РЅР°РїСЂР°РІР»РµРЅРёРµ Рё РІСЂРµРјСЏ РѕС‚РїСЂР°РІР»РµРЅРёСЏ: ");
         cin >> dest >> t;
         findSeats(dest, t);
     }
@@ -122,19 +122,19 @@ void processQueries() {
     }
     if (type == 3) {
         int id; Time dep, arr;
-        printf("Введите номер рейса, время отправления и время прибытия:");
+        printf("Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ СЂРµР№СЃР°, РІСЂРµРјСЏ РѕС‚РїСЂР°РІР»РµРЅРёСЏ Рё РІСЂРµРјСЏ РїСЂРёР±С‹С‚РёСЏ:");
         cin >> id >> dep >> arr;
         modifyFlight(id, dep, arr);
     }
     if (type == 4) {
         char dest[200];
-        printf("Введите направление рейса:");
+        printf("Р’РІРµРґРёС‚Рµ РЅР°РїСЂР°РІР»РµРЅРёРµ СЂРµР№СЃР°:");
         cin >> dest;
         removeFlights(dest);
     }
     if (type == 5) {
         char dest[200];
-        printf("Введите направление рейса:");
+        printf("Р’РІРµРґРёС‚Рµ РЅР°РїСЂР°РІР»РµРЅРёРµ СЂРµР№СЃР°:");
         cin >> dest;
         swapFlights(dest);
     }
